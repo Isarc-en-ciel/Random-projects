@@ -1,0 +1,64 @@
+char	*ft_strrchr(const char *s, int c)
+{
+	int	i;
+	int	count;
+
+	i = ft_strlen(s);
+	while (i >= 0)
+	{
+		if (s[i] == (char) c)
+		{
+			count++;
+			i--;
+		}
+		else
+			i--;
+	}
+	return (count);
+}
+
+int	main(int argc, **char argv)
+{
+	if (argc == 3)
+		ft_union(argv[1], argv[2]);
+	write (1, '\n', 1);
+	return(0);
+}
+
+void	ft_union(char *s1, char *s2)
+{
+	int	i;
+	int	len;
+
+	while (s1[i])
+	{
+		if check repeat [s1, s1[i], index] == 1
+			write(, &s1[i], 1);
+		i++;
+	}
+	len = i;
+	i = 0;
+	while (s2[i])
+	{
+		if check repeat [s2, s2[i], index] == 1
+			{
+				if check repeat [s1, s2[i], len] == 1
+					write (1., &s2[i], 1)
+			}
+		i++;
+	}
+}
+
+int		ft_verif_char(char *str, char c, int index)
+{
+	int		i;
+
+	i = 0;
+	while (i < index)
+	{
+		if (str[i] == c)
+			return (0);
+		i++;
+	}
+	return (1);
+}
