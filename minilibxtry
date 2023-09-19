@@ -1,0 +1,56 @@
+#include <mlx.h>
+#include <stdio.h>                                     
+
+typedef struct	s_data { //struct qui contient les donnees de l'image
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
+typedef struct	s_vars { //struct
+	void	*mlx;
+	void	*win;
+}				t_vars;
+
+int	key_hook(int keycode, t_vars *vars)
+{
+	if (keycode == 53) //code pour indiquer la touche "esc"
+	{
+		printf("merde\n");
+		return (1);
+	}
+	(void)vars;
+	printf("Hello from key_hook!\n"); //en cas de n'importe quelle autre touche
+	return (0);
+}
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8)); //calcul de l'offset
+	*(unsigned int*)dst = color;
+}
+
+int	main(void)
+{
+	t_data	data;
+	t_vars	vars;
+
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 680, 480, "Hello world!"); //cree la fenetre de taille x.y
+	data.img = mlx_new_image(vars.mlx, 680, 480); //cree l'image de taille x.y
+	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian); 
+	/*
+	** After creating an image, we can call `mlx_get_data_addr`, we pass
+	** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
+	** then be set accordingly for the *current* data address.
+	*/
+	my_mlx_pixel_put(&data, 5, 5, 0x00FF0000); // place un pixel rouge aux coord 5.5
+	my_mlx_pixel_put(&data, 10, 10, 0x00FF0000);
+	mlx_put_image_to_window(vars.mlx, vars.win, data.img, 0, 0); //place l'image dans la fenetre au bonnes coordonnees
+	mlx_hook(vars.win, 2, 0, &key_hook, &vars); //associe les evenements (ici clavier) a leur conseauence
+	mlx_loop(vars.mlx);
+}
