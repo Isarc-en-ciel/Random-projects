@@ -10,7 +10,7 @@ char	*ft_join(char *line, char *buffer, int size, int from, int to)
 	i = 0;
 	if(!line)
 		return (NULL);
-	res = malloc(sizeof(char) *(size + to + 1));
+	res = malloc(sizeof(char) * (size + to + 1));
 	if (!res)
 	{
 		free(line);
@@ -64,7 +64,7 @@ char *get_next_line(int fd)
 		{
 			line = ft_join(line, buffer, size, start, cursor);
 			bytes_read = read(fd, buffer, BUFFER_SIZE);
-			size += (cursor = start);
+			size += (cursor - start);
 			cursor = 0;
 		}
 		else if (buffer[cursor] == '\n')
